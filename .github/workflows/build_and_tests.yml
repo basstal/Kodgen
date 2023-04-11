@@ -48,6 +48,9 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: update apt database
+        run: sudo apt-get update
+
       - name: Install suitable compiler
         run: sudo apt-get install ${{ matrix.compiler }}
 
@@ -58,6 +61,9 @@ jobs:
         uses: jwlawson/actions-setup-cmake@v1.8
         with:
           cmake-version: '3.15.0'
+
+      - name: Install libclang 12 dependencies
+        run: sudo apt-get install libncurses5
 
       - name: Substitute Compiler Name
         uses: bluwy/substitute-string-action@v1
