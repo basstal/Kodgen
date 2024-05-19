@@ -54,6 +54,17 @@ bool FileParser::parse(fs::path const& toParseFile, FileParsingResult& out_resul
 		//Fill the parsed file info
 		out_result.parsedFile = FilesystemHelpers::sanitizePath(toParseFile);
 
+		{
+	        // 获取Clang版本信息
+	        CXString clangVersion = clang_getClangVersion();
+
+	        // 将版本信息转换为常规C字符串并打印
+	        printf("Clang version: %s\n", clang_getCString(clangVersion));
+
+	        // 释放CXString
+	        clang_disposeString(clangVersion);
+		}
+
 		//Parse the given file
 		CXTranslationUnit translationUnit = clang_parseTranslationUnit(_clangIndex, toParseFile.string().c_str(), _settings->getCompilationArguments().data(), static_cast<int32>(_settings->getCompilationArguments().size()), nullptr, 0, CXTranslationUnit_SkipFunctionBodies | CXTranslationUnit_Incomplete | CXTranslationUnit_KeepGoing);
 
@@ -106,7 +117,7 @@ CXChildVisitResult FileParser::parseNestedEntity(CXCursor cursor, CXCursor /* pa
 
 	DISABLE_WARNING_PUSH
 	DISABLE_WARNING_UNSCOPED_ENUM
-	
+
 	CXChildVisitResult	visitResult = CXChildVisitResult::CXChildVisit_Continue;
 
 	DISABLE_WARNING_POP

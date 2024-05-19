@@ -20,7 +20,7 @@ namespace kodgen
 {
 	class TypeInfo
 	{
-		private:
+		public:
 			/** Internal keywords used for type splitting. */
 			static constexpr char const*	_classQualifier		= "class ";
 			static constexpr char const*	_structQualifier	= "struct ";
@@ -44,9 +44,9 @@ namespace kodgen
 
 			/**
 			*	@brief Compute a class template full name.
-			* 
+			*
 			*	@param cursor The class template cursor (Cursor_ClassTemplate).
-			* 
+			*
 			*	@return The computed full name.
 			*/
 			static std::string	computeClassTemplateFullName(CXCursor cursor)					noexcept;
@@ -67,7 +67,7 @@ namespace kodgen
 
 			/**
 			*	@brief Remove the template parameters from a type string.
-			* 
+			*
 			*	@param typeString The string we are removing the template parameters from.
 			*/
 			static void			removeTemplateParameters(std::string& typeString)				noexcept;
@@ -80,7 +80,7 @@ namespace kodgen
 
 			/**
 			*	@brief Fill the _templateParameters list with the given cursor.
-			* 
+			*
 			*	@param cursor The template type cursor.
 			*/
 			void fillTemplateParameters(CXCursor cursor)									noexcept;
@@ -136,9 +136,9 @@ namespace kodgen
 
 			/**
 			*	@brief Check whether a type is a template type or not, by looking for the presence of a < character.
-			* 
+			*
 			*	@param typename_ The typename to check.
-			* 
+			*
 			*	@return true if the typename_ is a template, else false.
 			*/
 			static bool								isTemplateTypename(std::string const& typename_)									noexcept;
@@ -170,7 +170,7 @@ namespace kodgen
 
 			/**
 			*	@brief Getter for the field _templateParameters.
-			* 
+			*
 			*	@return _templateParameters.
 			*/
 			std::vector<TemplateParamInfo> const&	getTemplateParameters()														const	noexcept;
@@ -180,16 +180,16 @@ namespace kodgen
 			*			Ex: template <typename T, int U, template <typename> typename V>
 			*				will output
 			*				typename, int, template <typename> typename
-			* 
+			*
 			*	@param useAutoForNonTypeParams Should all non-type parameters be replaced by the auto keyword?
-			* 
+			*
 			*	@return The template signature of the type if the type info is a template type, else an empty string.
 			*/
 			std::string								computeTemplateSignature(bool useAutoForNonTypeParams)						const	noexcept;
 
 			/**
 			*	@brief Check whether this type is template or not.
-			* 
+			*
 			*	@return true if the type depends on other types, else false.
 			*/
 			bool									isTemplateType()															const	noexcept;
